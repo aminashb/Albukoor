@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Journal</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+
+  <nav aria-label="Main navigation">
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="gallery.html">Visual Inspiration</a></li>
+      <li><a href="journal.html">Journal</a></li>
+    </ul>
+  </nav>
+
+  <main>
+
+    <section class="journal-entry">
+      <!-- Image source: Unsplash.com - free stock image -->
+      <img src="media/pexels-content-pixie-1405717-2736499.jpg" alt="Notebook and coffee" width="200">
+
+      <div>
+        <h1>Morning Journal</h1>
+        <p>
+          A reflective space to support consistency and mindful habits during
+          the early hours of the day.
+        </p>
+      </div>
+    </section>
+
+    <section class="tracker">
+      <h2>Daily Habit Tracker</h2>
+
+      <ul>
+        <li>
+          <label>
+            <input type="checkbox" data-habit="fajr">
+            Wake up for Fajr prayer
+          </label>
+        </li>
+
+        <li>
+          <label>
+            <input type="checkbox" data-habit="reflection">
+            Morning reflection or dua
+          </label>
+        </li>
+
+        <li>
+          <label>
+            <input type="checkbox" data-habit="reading">
+            Istighfar and Quran reading
+          </label>
+        </li>
+
+        <li>
+          <label>
+            <input type="checkbox" data-habit="planning">
+            Morning dhikr and planning
+          </label>
+        </li>
+
+        <li>
+          <label>
+            <input type="checkbox" data-habit="healthy-breakfast">
+            Pray sunna prayers
+          </label>
+      </ul>
+
+      <p id="progress"></p>
+    </section>
+
+  </main>
+
+  <script>
+    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+    const progressText = document.getElementById('progress');
+
+    function updateProgress() {
+      let completed = 0;
+
+      checkboxes.forEach(box => {
+        if (box.checked) completed++;
+        localStorage.setItem(box.dataset.habit, box.checked);
+      });
+
+      progressText.textContent =
+        `Completed ${completed} of ${checkboxes.length} habits`;
+    }
+
+    checkboxes.forEach(box => {
+      const saved = localStorage.getItem(box.dataset.habit);
+      box.checked = saved === 'true';
+      box.addEventListener('change', updateProgress);
+    });
+
+    updateProgress();
+  </script>
+
+</body>
+</html>

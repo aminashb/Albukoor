@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Early Morning Routine</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+
+  <nav aria-label="Main navigation">
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="gallery.html">Visual Inpiration</a></li>
+      <li><a href="journal.html">Journal</a></li>
+    </ul>
+  </nav>
+
+  <main>
+    <section class="hero">
+      <div class="hero-text">
+        <h1 id="greeting">Welcome</h1>
+        <p class="hero-slogan">
+          Barakah is placed in the early hours — begin your day with intention and purpose.
+        </p>
+        <p class="hero-sub">
+          A reflective practice shaped by the teachings of <em>Al-Bukoor (Early Morning)</em>.
+        </p>
+      </div>
+      <img src="media/البكور-60881-1000x1500-webp.jpeg" alt="Al-Bukoor book cover" width="200">
+    </section>
+
+    <!-- YouTube video -->
+    <section>
+      <h2>Fajr Miracles</h2>
+      <iframe 
+      src="https://www.youtube.com/embed/WEeLQ5oxwyk?si=iFctEYYhitta8PaJ" 
+      title="YouTube video player" 
+      frameborder="0" 
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+      referrerpolicy="strict-origin-when-cross-origin" 
+      allowfullscreen></iframe>
+    </section>
+  </main>
+
+  <script>
+    const hour = new Date().getHours();
+    const greeting = document.getElementById("greeting");
+
+    if (hour < 12) {
+      greeting.textContent = "Good Morning";
+    } else {
+      greeting.textContent = "Welcome";
+    }
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,286 @@
+/* Basic reset + accessibility */
+:root {
+    --blue-light: #9ACDD9;
+    --green-olive: #7A8C5E;
+    --yellow-soft: #F2BC57;
+    --orange-warm: #F2AC57;
+    --off-white: #F2F2F2;
+    --text-dark: #2e2e2e;
+  }
+* {
+    box-sizing: border-box;
+  }
+  
+  body {
+    margin: 0;
+    font-family: 'Libre Baskerville', serif;
+    line-height: 1.6;
+    letter-spacing: 0.2px;
+    background-color: var(--off-white);
+    color: var(--text-dark);
+      
+  }
+
+h1, h2 {
+    color: var(--green-olive);
+    font-family: 'Libre Baskerville', serif;
+    letter-spacing: 0.3px;
+  }  
+  
+  img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+  }
+  
+  main {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 1.5rem;
+  }
+  
+  /* Navigation */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    backdrop-filter: blur(10px);
+    background-color: rgba(242, 242, 242, 0.85);
+  }
+  
+  nav ul {
+    margin: 0;
+    padding: 0.75rem 1rem;
+    list-style: none;
+    display: flex;
+    gap: 0.75rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  
+  nav a {
+    text-decoration: none;
+    padding: 0.6rem 0.9rem;
+    border-radius: 999px;
+    display: inline-block;
+    color: var(--green-olive);
+  }
+  
+  nav a:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 3px;
+  }
+
+  nav a:hover,nav a:focus-visible {
+    background-color: var(--blue-light);
+    color: var(--text-dark);
+    }
+  
+  /* Headings & text rhythm */
+  h1 {
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    margin: 0 0 0.6rem 0;
+  }
+  
+  h2 {
+    font-size: clamp(1.2rem, 2vw, 1.6rem);
+    margin: 1.5rem 0 0.5rem 0;
+  }
+  
+  p {
+    margin: 0 0 1rem 0;
+  }
+  
+  /* Home hero */
+  .hero {
+    padding: 2.25rem 1.5rem;
+    border-radius: 16px;
+    margin-top: 1rem;
+    background-color: var(--blue-light);
+  
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+  }
+  
+  .hero-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  
+    flex: 1;             
+    max-width: 650px;     
+  }
+
+  .hero-slogan {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.05rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .hero-sub {
+    font-size: 0.9rem;
+    opacity: 0.8;
+  }  
+
+  
+  .hero img {
+    width: 200px;       
+    height: auto;
+    border-radius: 12px;
+    flex-shrink: 0;      
+  }
+  
+  /* About page: blockquote styling */
+  blockquote {
+    margin: 1.25rem 0;
+    padding: 1rem 1.25rem;
+    border-left: 4px solid currentColor;
+    border-radius: 8px;
+    font-style: italic;
+    background-color: var(--off-white);
+    border-left-color: var(--green-olive);
+  }
+  
+  /* Gallery grid */
+  .gallery {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+  
+  .gallery img {
+    border-radius: 14px;
+    overflow: hidden;
+    background-color: var(--off-white);
+  }
+  
+  /* Journal mixed layout */
+  .journal-entry {
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+    margin-top: 1rem;
+    padding: 1rem;
+    border-radius: 16px;
+    background-color: white;
+    border: 1px solid rgba(122, 140, 94, 0.25);
+  }
+  
+  .journal-entry img {
+    width: 48%;
+    border-radius: 14px;
+  }
+  
+  .journal-entry div {
+    width: 52%;
+  }
+  
+  /* Tracker styling */
+  .tracker {
+    margin-top: 1.5rem;
+    padding: 1rem;
+    border-radius: 16px;
+    background-color: white;
+    border: 1px solid rgba(122, 140, 94, 0.25);
+  }
+  
+  .tracker ul {
+    list-style: none;
+    padding: 0;
+    margin: 0.75rem 0 0 0;
+  }
+  
+  .tracker li {
+    margin-bottom: 0.75rem;
+  }
+  
+  .tracker label {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    padding: 0.75rem;
+    border-radius: 12px;
+    background-color: var(--off-white);
+  }
+  
+  .tracker input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+  }
+  
+  .tracker label:focus-within {
+    outline: 2px solid currentColor;
+    outline-offset: 3px;
+  }
+
+  .tracker input[type="checkbox"]:checked + span {
+    color: var(--green-olive);
+  }
+  
+  #progress {
+    margin-top: 0.9rem;
+    font-weight: bold;
+  }
+  
+  /* Responsive */
+  @media (max-width: 900px) {
+    .gallery {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  
+  @media (max-width: 768px) {
+    main {
+      padding: 1.1rem;
+    }
+  
+    .journal-entry {
+      flex-direction: column;
+    }
+  
+    .journal-entry img,
+    .journal-entry div {
+      width: 100%;
+    }
+  
+    iframe {
+      min-height: 260px;
+    }
+    .hero {
+        flex-direction: column;
+        text-align: center;
+      }
+    
+      .hero-text {
+        max-width: 100%;
+        align-items: center;
+      }
+  }
+  
+  @media (max-width: 520px) {
+    .gallery {
+      grid-template-columns: 1fr;
+    }
+  
+    nav ul {
+      gap: 0.4rem;
+    }
+  
+    nav a {
+      padding: 0.55rem 0.75rem;
+    }
+  }
+  @media (max-width: 768px) {
+    .hero {
+      flex-direction: column;
+      text-align: center;
+    }
+  
+    .hero-text {
+      max-width: 100%;
+    }
+  }
+  
