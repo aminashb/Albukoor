@@ -143,26 +143,8 @@ h1, h2 {
     border-left-color: var(--green-olive);
   }
   
-  /* Gallery grid */
-  .gallery {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1rem;
-    margin-top: 1rem;
-  }
-  
-  .gallery img {
-    border-radius: 14px;
-    overflow: hidden;
-    background-color: var(--off-white);
-    width: 100%;
-    height: 700px;        
-    object-fit: cover;   
-
-  }
-  
   /* Journal mixed layout */
-  .journal-entry {
+  .tracker-quote {
     display: flex;
     gap: 1.5rem;
     align-items: center;
@@ -173,12 +155,12 @@ h1, h2 {
     border: 1px solid rgba(122, 140, 94, 0.25);
   }
   
-  .journal-entry img {
+  .tracker-quote img {
     width: 48%;
     border-radius: 14px;
   }
   
-  .journal-entry div {
+  .tracker-quote div {
     width: 52%;
   }
 
@@ -195,6 +177,8 @@ h1, h2 {
   
     max-width: 50ch;
   }
+
+
   /* Tracker styling */
   .tracker {
     margin-top: 1.5rem;
@@ -241,13 +225,7 @@ h1, h2 {
     margin-top: 0.9rem;
     font-weight: bold;
   }
-  
-  /* Responsive */
-  @media (max-width: 900px) {
-    .gallery {
-      grid-template-columns: repeat(2, 1fr);
-    }
-  }
+
   
   @media (max-width: 768px) {
     main {
@@ -275,16 +253,10 @@ h1, h2 {
         max-width: 100%;
         align-items: center;
       }
-      .gallery img {
-        height: 250px;
-      }
     
   }
   
   @media (max-width: 520px) {
-    .gallery {
-      grid-template-columns: 1fr;
-    }
   
     nav ul {
       gap: 0.4rem;
@@ -302,9 +274,6 @@ h1, h2 {
   
     .hero-text {
       max-width: 100%;
-    }
-    .gallery img {
-      height: 200px;
     }
   }
   
