@@ -109,13 +109,9 @@ const routes = {
 
 
 //Navigating and rendering pages
-function navigate(path){
-    history.pushState({}, "", path);
-    render();
-}
 
 function render(){
-    const path = window.location.pathname;
+    const path = window.location.hash.slice(1) || "/";
     const view = routes[path] || notfound;
     app.innerHTML = view();
 
@@ -129,15 +125,7 @@ function notfound(){
     `;
 }
 
-document.addEventListener("click", (e) => {
-    if(e.target.matches("[data-link]")){
-        e.preventDefault();
-        navigate(e.target.getAttribute("href"));
-
-    }
-});
-
-window.addEventListener("popstate", render);
+window.addEventListener("hashchange", render);
 
 render();
 
