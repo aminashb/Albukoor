@@ -124,7 +124,34 @@ h1, h2 {
   .hero-sub {
     font-size: 0.9rem;
     opacity: 0.8;
-  }  
+  }
+  
+  .cta-button{
+    margin-top: 0.75rem;
+    padding: 0.9rem 1.2rem;
+    border: none;
+    border-radius: 999px;
+    text-decoration: none;
+
+    background: linear-gradient(135deg, var(--green-olive), #5f6f49);
+    color: white;
+    font-family: 'Libre Baskerville', serif;
+    font-size: 0.95rem;
+    letter-spacing: 0.3px;
+
+    cursor: pointer;
+
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+    transition: all 0.2s ease;
+  }
+
+  .cta-button:hover,
+  .cta-button:focus-visible {
+  background-color: var(--yellow-soft);
+  color: var(--text-dark);
+  outline: 2px solid var(--green-olive);
+  outline-offset: 3px;
+}
 
   
   .hero img {
@@ -282,12 +309,12 @@ h1, h2 {
       padding: 1.1rem;
     }
   
-    .journal-entry {
+    .tracker-quote {
       flex-direction: column;
     }
   
-    .journal-entry img,
-    .journal-entry div {
+    .tracker-quote img,
+    .tracker-quote div {
       width: 100%;
     }
   
@@ -314,16 +341,6 @@ h1, h2 {
   
     nav a {
       padding: 0.55rem 0.75rem;
-    }
-  }
-  @media (max-width: 768px) {
-    .hero {
-      flex-direction: column;
-      text-align: center;
-    }
-  
-    .hero-text {
-      max-width: 100%;
     }
   }
   

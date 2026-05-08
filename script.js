@@ -12,6 +12,7 @@ const routes = {
             <p class="hero-sub">
             A reflective practice shaped by the teachings of <em>Al-Bukoor (Early Morning)</em>.
             </p>
+            <a href="#/tracker" class="cta-button">Begin Today</a>
         </div>
         <img src="media/البكور-60881-1000x1500-webp.jpeg" alt="Al-Bukoor book cover" width="200">
         </section>
@@ -20,7 +21,7 @@ const routes = {
         <section>
         <h2>Fajr Miracles</h2>
         <iframe 
-        src="https://www.youtube.com/embed/WEeLQ5oxwyk?si=iFctEYYhitta8PaJ" 
+        src="https://www.youtube.com/embed/aZZXxyd3ZNY?si=W9yZyIhr4p_Djflr" 
         title="YouTube video player" 
         frameborder="0" 
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
@@ -53,13 +54,18 @@ const routes = {
             <p>The app breaks early rising into small stages so users can build consistency gradually.</p>
 
             <article>
-                <h3>Stage 1: Wake for Fajr</h3>
+                <h3>Stage 1: The Foundation</h3>
                 <p>Focus on waking up on time and reducing reliance on snooze alarms.</p>
             </article>
 
             <article>
                 <h3>Stage 2: Stay Awake</h3>
                 <p>Begin treating Fajr as the start of the day rather than a sleep interruption.</p>
+            </article>
+
+            <article>
+                <h3>Stage 3: Build a Morning Routine</h3>
+                <p>Add simple habits such as dhikr, reflection, reading, and daily planning.</p>
             </article>
 
             <article>
@@ -85,11 +91,11 @@ const routes = {
             <h2>Daily Habit Tracker</h2>
             <p>Track the habits that help turn Fajr into the start of the day.</p>
         
-            <label><input type="checkbox" class="habit"> Wake up for Fajr</label>
-            <label><input type="checkbox" class="habit"> Stay awake after prayer</label>
-            <label><input type="checkbox" class="habit"> Morning dhikr</label>
-            <label><input type="checkbox" class="habit"> Read or reflect for 10 minutes</label>
-            <label><input type="checkbox" class="habit"> Plan one task for the day</label>
+            <label><input type="checkbox" class="habit"> <span>Wake up for Fajr</span></label>
+            <label><input type="checkbox" class="habit"> <span>Stay awake after prayer</span></label>
+            <label><input type="checkbox" class="habit"> <span>Morning dhikr</span></label>
+            <label><input type="checkbox" class="habit"> <span>Read or reflect for 10 minutes</span></label>
+            <label><input type="checkbox" class="habit"> <span>Plan one task for the day</span></label>
         
             <p id="progress">Progress: 0/5 habits completed</p>
         </section>
