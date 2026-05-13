@@ -34,28 +34,25 @@ h1, h2 {
   }
   
   main {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 1.5rem;
+    min-height: 100vh
   }
   
   /* Navigation */
   nav {
-    position: sticky;
-    top: 0;
-    z-index: 10;
-    backdrop-filter: blur(10px);
-    background-color: rgba(242, 242, 242, 0.85);
+    position: fixed;
+    top: 1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 100;
   }
   
   nav ul {
+    display: none;
     margin: 0;
     padding: 0.75rem 1rem;
     list-style: none;
-    display: flex;
     gap: 0.75rem;
     justify-content: center;
-    justify-items: center;
     align-content: center;
     flex-wrap: wrap;
   }
@@ -76,7 +73,31 @@ h1, h2 {
   nav a:hover,nav a:focus-visible {
     background-color: var(--blue-light);
     color: var(--text-dark);
-    }
+  }
+
+  .nav-inner {
+    background: rgba(242, 242, 242, 0.88);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 0.5rem 1rem;
+  }
+
+  .nav-inner.nav-open {
+    border-radius: 16px;
+  }
+
+  .nav-inner.nav-open ul {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .page-wrapper {
+    padding: 6rem 2rem 2rem;
+    max-width: 800px;
+    margin: 0 auto;
+  }
   
   /* Headings & text rhythm */
   h1 {
@@ -95,15 +116,13 @@ h1, h2 {
   
   /* Home hero */
   .hero {
-    padding: 2.25rem 1.5rem;
-    border-radius: 16px;
-    margin-top: 1rem;
+    padding-top: 5rem;
     background-color: var(--blue-light);
-  
+    min-height: 100vh;
+    width: 100%;
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    gap: 1.5rem;
+    justify-content: center;
   }
   
   .hero-text {
@@ -127,6 +146,8 @@ h1, h2 {
   }
   
   .cta-button{
+    display: inline-block;
+    align-self: flex-start;
     margin-top: 0.75rem;
     padding: 0.9rem 1.2rem;
     border: none;
@@ -160,19 +181,101 @@ h1, h2 {
     border-radius: 12px;
     flex-shrink: 0;      
   }
+
+  .intro-section {
+    background-color: white;
+    width: 100%;
+    padding: 4rem 2rem;
+  }
+
+  .intro-inner {
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .video-section {
+    padding: 4rem 2rem;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .community-preview {
+    background-color: var(--blue-light);
+    padding: 4rem 2rem;
+  }
+  
+  .community-preview-inner {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  
+  .community-comments {
+    display: flex;
+    gap: 1rem;
+    margin: 2rem 0;
+  }
+  
+  .comment-card {
+    background: white;
+    border-radius: 16px;
+    padding: 1.25rem;
+    flex: 1;
+  }
+
   
   /* About page: blockquote styling */
+
+  .about {
+    padding-top: 10rem;
+  }
+
+  .about-text {
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
   blockquote {
     margin: 1.25rem 0;
     padding: 1rem 1.25rem;
     border-left: 4px solid currentColor;
     border-radius: 8px;
     font-style: italic;
-    background-color: var(--off-white);
+    background-color: white;
     border-left-color: var(--green-olive);
   }
   
-  /* Journal mixed layout */
+  /* Stages layout */
+
+  .current-stage {
+    border-left: 4px solid var(--green-olive);
+    background-color: white;
+  }
+  
+  .current-stage::after {
+    content: "← You are here";
+    display: block;
+    margin-top: 0.75rem;
+    color: var(--green-olive);
+    font-size: 0.85rem;
+    font-style: italic;
+  }
+
+  .current-stage {
+    margin-top: 1rem;
+    padding: 0.9rem;
+    border-radius: 12px;
+    background-color: white;
+    border-left: 4px solid var(--green-olive);
+    font-weight: bold;
+  }
+  
+  .current-stage::after {
+    content: "← You are here";
+    color: var(--green-olive);
+    font-size: 0.85rem;
+    font-style: italic;
+  }
+
   .tracker-quote {
     display: flex;
     gap: 1.5rem;
@@ -255,6 +358,27 @@ h1, h2 {
     font-weight: bold;
   }
 
+  .progress-bar-wrapper {
+    margin-top: 1rem;
+    height: 10px;
+    background-color: var(--off-white);
+    border-radius: 999px;
+    overflow: hidden;
+    border: 1px solid rgba(122, 140, 94, 0.25);
+  }
+  
+  .progress-bar {
+    height: 100%;
+    width: 0%;
+    background-color: var(--green-olive);
+    border-radius: 999px;
+    transition: width 0.3s ease;
+  }
+
+  .progress-bar.complete {
+    background-color: var(--yellow-soft);
+  }
+
   /* Community page styling */
 .community {
   margin-top: 1.5rem;
@@ -303,11 +427,64 @@ h1, h2 {
   font-weight: bold;
 }
 
+.checkin-box {
+  background-color: white;
+  border-radius: 16px;
+  padding: 1.5rem;
+  margin: 1.5rem 0;
+  border: 1px solid rgba(122, 140, 94, 0.25);
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+#reflectionInput {
+  width: 100%;
+  padding: 0.75rem;
+  border-radius: 12px;
+  border: 1px solid rgba(122, 140, 94, 0.25);
+  font-family: 'Libre Baskerville', serif;
+  font-size: 0.9rem;
+  resize: vertical;
+  background-color: var(--off-white);
+}
+
+#reflectionInput:focus {
+  outline: 2px solid var(--green-olive);
+  outline-offset: 2px;
+}
+
+.community-feed {
+  margin-top: 1.5rem;
+}
+
+.feed-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 0.85rem 1rem;
+  background: white;
+  border-radius: 12px;
+  margin-bottom: 0.75rem;
+  border: 1px solid rgba(122, 140, 94, 0.25);
+}
+
+.feed-name {
+  font-weight: bold;
+  font-size: 0.85rem;
+  color: var(--green-olive);
+}
+
+.feed-text {
+  font-size: 0.9rem;
+}
+
+.feed-new {
+  border-left: 3px solid var(--green-olive);
+}
+
   
   @media (max-width: 768px) {
-    main {
-      padding: 1.1rem;
-    }
   
     .tracker-quote {
       flex-direction: column;
@@ -322,25 +499,38 @@ h1, h2 {
       min-height: 260px;
     }
     .hero {
-        flex-direction: column;
-        text-align: center;
-      }
-    
-      .hero-text {
-        max-width: 100%;
-        align-items: center;
-      }
+      flex-direction: column;
+      text-align: center;
+      padding: 5rem 1.5rem 2rem;
+    }
+  
+    .hero-text {
+      max-width: 100%;
+      align-items: center;
+    }
+  
+    .hero img {
+      width: 140px;
+      margin: 0 auto;
+    }
+
+    .cta-button {
+      align-self: center;
+    }
+
+    .community-comments {
+      flex-direction: column;
+    }
     
   }
   
-  @media (max-width: 520px) {
-  
+  @media (min-width: 768px) {
     nav ul {
-      gap: 0.4rem;
+      display: flex;
     }
   
-    nav a {
-      padding: 0.55rem 0.75rem;
+    .nav-toggle {
+      display: none;
     }
   }
   
