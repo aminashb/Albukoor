@@ -242,6 +242,23 @@ function notfound(){
     `;
 }
 
+const navToggle = document.getElementById("navToggle");
+const navInner = document.querySelector(".nav-inner");
+
+if (navToggle && navInner) {
+  navToggle.addEventListener("click", function () {
+    const isOpen = navInner.classList.contains("nav-open");
+
+    if (isOpen) {
+      navInner.classList.remove("nav-open");
+      navToggle.setAttribute("aria-expanded", "false");
+    } else {
+      navInner.classList.add("nav-open");
+      navToggle.setAttribute("aria-expanded", "true");
+    }
+  });
+}
+
 window.addEventListener("hashchange", render);
 
 render();
