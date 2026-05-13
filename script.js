@@ -286,59 +286,49 @@ function runPageLogic() {
     });
     }
 
-
-    // Community page logic
+    // Community logic
     const checkInButton = document.getElementById('checkInButton');
     const checkInMessage = document.getElementById('checkInMessage');
-
-    if (checkInButton && checkInMessage) {
-        checkInButton.addEventListener('click', function () {
-            checkInMessage.textContent = 'Checked in: you started your day with Fajr.';
+    const reflectionInput = document.getElementById('reflectionInput');
+    const feedList = document.getElementById('feedList');
+    const counterText = document.getElementById('counterText');
+    
+    if (checkInButton && feedList) {
+        let count = 47;
+    
+        checkInButton.addEventListener('click', function() {
+            const reflection = reflectionInput.value.trim();
+    
+            if (!reflection) {
+                checkInMessage.textContent = 'Please share a short reflection before checking in.';
+                return;
+            }
+    
+            // Update counter
+            count++;
+            counterText.textContent = count + ' people have checked in today';
+    
+            // Create new feed item
+            const li = document.createElement('li');
+            li.className = 'feed-item feed-new';
+    
+            const name = document.createElement('span');
+            name.className = 'feed-name';
+            name.textContent = 'You';
+    
+            const text = document.createElement('span');
+            text.className = 'feed-text';
+            text.textContent = reflection;
+    
+            li.appendChild(name);
+            li.appendChild(text);
+            feedList.insertBefore(li, feedList.firstChild);
+    
+            // Update UI
+            checkInMessage.textContent = 'Checked in — Alhamdulillah. بارك الله فيك';
+            checkInButton.disabled = true;
+            checkInButton.textContent = '✓ Checked in';
+            reflectionInput.value = '';
         });
     }
-}
-
-const checkInButton = document.getElementById('checkInButton');
-const checkInMessage = document.getElementById('checkInMessage');
-const reflectionInput = document.getElementById('reflectionInput');
-const feedList = document.getElementById('feedList');
-const counterText = document.getElementById('counterText');
-
-if (checkInButton && feedList) {
-    let count = 47;
-
-    checkInButton.addEventListener('click', function() {
-        const reflection = reflectionInput.value.trim();
-
-        if (!reflection) {
-            checkInMessage.textContent = 'Please share a short reflection before checking in.';
-            return;
-        }
-
-        // Update counter
-        count++;
-        counterText.textContent = count + ' people have checked in today';
-
-        // Create new feed item
-        const li = document.createElement('li');
-        li.className = 'feed-item feed-new';
-
-        const name = document.createElement('span');
-        name.className = 'feed-name';
-        name.textContent = 'You';
-
-        const text = document.createElement('span');
-        text.className = 'feed-text';
-        text.textContent = reflection;
-
-        li.appendChild(name);
-        li.appendChild(text);
-        feedList.insertBefore(li, feedList.firstChild);
-
-        // Update UI
-        checkInMessage.textContent = 'Checked in — Alhamdulillah. بارك الله فيك';
-        checkInButton.disabled = true;
-        checkInButton.textContent = '✓ Checked in';
-        reflectionInput.value = '';
-    });
 }
