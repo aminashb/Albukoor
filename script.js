@@ -12,6 +12,7 @@ const routes = {
                 <p class="hero-sub">
                 A reflective practice shaped by the teachings of <em>Al-Bukoor (Early Morning)</em>.
                 </p>
+                <p id="fajrTime" class="fajr-time">Loading Fajr time...</p>
                 <a href="#/tracker" class="cta-button">Begin Today</a>
             </div>
             <img src="media/البكور-60881-1000x1500-webp.jpeg" alt="Al-Bukoor book cover" width="200">
@@ -166,20 +167,39 @@ const routes = {
                 </p>
                 </div>
             </section>
-            <section id="tracker" class="tracker">
-                <h2>Daily Habit Tracker</h2>
-                <p>Track the habits that help turn Fajr into the start of the day.</p>
-            
-                <label><input type="checkbox" class="habit"> <span>Wake up for Fajr in its first time</span></label>
-                <label><input type="checkbox" class="habit"> <span>Stay on the prayer mat after salaam</span></label>
-                <label><input type="checkbox" class="habit"> <span>Recite morning adhkar</span></label>
-                <label><input type="checkbox" class="habit"> <span>Read one page of Qur'an</span></label>
-                <label><input type="checkbox" class="habit"> <span>Plan your day's intention</span></label>
-                <div class="progress-bar-wrapper">
-                    <div class="progress-bar" id="progressBar"></div>
+            <section class="tracker-layout">
+                <div class="tracker-habits">
+                    <h2>Daily Habit Tracker</h2>
+                    <p>Track the habits that help turn Fajr into the start of the day.</p>
+                    <ul>
+                        <li><label><input type="checkbox" class="habit"> <span>Wake up for Fajr in its first time</span></label></li>
+                        <li><label><input type="checkbox" class="habit"> <span>Stay on the prayer mat after salaam</span></label></li>
+                        <li><label><input type="checkbox" class="habit"> <span>Recite morning adhkar</span></label></li>
+                        <li><label><input type="checkbox" class="habit"> <span>Read one page of Qur'an</span></label></li>
+                        <li><label><input type="checkbox" class="habit"> <span>Plan your day's intention</span></label></li>
+                    </ul>
+                    <div class="progress-bar-wrapper">
+                        <div class="progress-bar" id="progressBar"></div>
+                    </div>
+                    <p id="progress">Progress: 0/5 habits completed</p>
+                    <div id="stageBanner" class="stage-banner" style="display:none;">
+                        <p id="stageBannerText"></p>
+                    </div>
                 </div>
-                <p id="progress">Progress: 0/5 habits completed</p>
+                <div class="calendar-section">
+                    <h3>Monthly Progress</h3>
+                    <div class="calendar" id="calendar"></div>
+                </div>
             </section>
+            <div class="locked-stage">
+                <h3>🔒 Stage 2 — Stay Awake Until Shurooq</h3>
+                <ul>
+                    <li><label><input type="checkbox" disabled> <span>Pray Duha after sunrise</span></label></li>
+                    <li><label><input type="checkbox" disabled> <span>Continue dhikr until shurooq</span></label></li>
+                    <li><label><input type="checkbox" disabled> <span>Read Qur'an after shurooq</span></label></li>
+                </ul>
+            </div>
+
         </div>
   
     `,
@@ -194,7 +214,7 @@ const routes = {
                 <div class="checkin-box">
                     <p id="counterText">47 people have checked in today</p>
                     <textarea id="reflectionInput" 
-                        placeholder="Share a short reflection — what helped you wake for Fajr today?" 
+                        placeholder="Share a short reflection to check in — what helped you wake for Fajr today?" 
                         rows="3">
                     </textarea>
                     <button id="checkInButton">I woke up for Fajr today</button>
@@ -223,15 +243,16 @@ const routes = {
     `
 };
 
-const userStage = 1;
+
+const userStage = parseInt(localStorage.getItem('currentStage')) || 1;
 
 //Navigating and rendering pages
 
 function render(){
     const path = window.location.hash.slice(1) || "/";
+
     const view = routes[path] || notfound;
     app.innerHTML = view();
-
     runPageLogic();
 }
 
@@ -277,30 +298,152 @@ function runPageLogic() {
         }
     }
 
+    const fajrTime = document.getElementById('fajrTime');
+    if (fajrTime) {
+        fetch('https://api.aladhan.com/v1/timingsByCity?city=London&country=UK&method=2')
+            .then(function(response) {
+                return response.json();
+            })
+            .then(function(data) {
+                const fajr = data.data.timings.Fajr;
+                fajrTime.textContent = 'Fajr in London today: ' + fajr;
+            });
+    }
+
     // Tracker page logic
     const habits = document.querySelectorAll('.habit');
     const progress = document.getElementById('progress');
     const progressBar = document.getElementById('progressBar');
 
     if (habits.length > 0 && progress && progressBar) {
-    habits.forEach(function(habit) {
-        habit.addEventListener('change', function() {
-        const total = habits.length;
-        const completed = document.querySelectorAll('.habit:checked').length;
-        const percentage = (completed / total) * 100;
 
-        progressBar.style.width = percentage + '%';
-        progress.textContent = 'Progress: ' + completed + '/' + total + ' habits completed';
-
-        if (completed === total) {
-            progress.textContent = 'Masha\'Allah — all habits complete. بارك الله فيك';
-            progressBar.classList.add('complete');
-        }  else {
-            progress.textContent = 'Progress: ' + completed + '/' + total + ' habits completed';
-            progressBar.classList.remove('complete');
+        const saved = JSON.parse(localStorage.getItem('habits'));
+        if (saved) {
+            habits.forEach(function(habit, index) {
+                habit.checked = saved[index];
+            });
         }
+
+        const initialCompleted = document.querySelectorAll('.habit:checked').length;
+        const initialPercentage = (initialCompleted / habits.length) * 100;
+        progressBar.style.width = initialPercentage + '%';
+        progress.textContent = 'Progress: ' + initialCompleted + '/' + habits.length + ' habits completed';
+
+        habits.forEach(function(habit) {
+            habit.addEventListener('change', function() {
+            const total = habits.length;
+            const completed = document.querySelectorAll('.habit:checked').length;
+            const states = [];
+            for (let i of habits) {
+                states.push(i.checked);
+            }
+            localStorage.setItem('habits', JSON.stringify(states));
+            const percentage = (completed / total) * 100;
+
+            progressBar.style.width = percentage + '%';
+            progress.textContent = 'Progress: ' + completed + '/' + total + ' habits completed';
+
+            if (completed === total) {
+                // Update stage banner
+                const stageBanner = document.getElementById('stageBanner');
+                const stageBannerText = document.getElementById('stageBannerText');
+                const savedDays = JSON.parse(localStorage.getItem('completedDays')) || [];
+
+                if (stageBanner && stageBannerText && savedDays.length > 0) {
+                    stageBanner.style.display = 'block';
+                    
+                    if (userStage < 4) {
+                        const daysLeft = 14 - savedDays.length;
+                        if (daysLeft > 0) {
+                            stageBannerText.textContent = 'Keep going — ' + daysLeft + ' more days until Stage ' + (userStage + 1) + ' unlocks.';
+                        } else {
+                            stageBannerText.textContent = 'Stage ' + (userStage + 1) + ' is now unlocked. Head to the Stages page to see what\'s next.';
+                        }
+                    } else {
+                        stageBannerText.textContent = 'Masha\'Allah — you have reached the final stage. Keep going year-round.';
+                    }
+                }
+                progress.textContent = 'Masha\'Allah — all habits complete. بارك الله فيك';
+                progressBar.classList.add('complete');
+
+
+                // Save today as a completed day
+                const completedDays = JSON.parse(localStorage.getItem('completedDays')) || [];
+                const today = new Date().toISOString().split('T')[0];
+                
+                if (!completedDays.includes(today)) {
+                    completedDays.push(today);
+                    localStorage.setItem('completedDays', JSON.stringify(completedDays));
+                }
+
+                // Check if stage should advance
+                if (completedDays.length >= 14) {
+                    const newStage = userStage + 1;
+                    if (newStage <= 4) {
+                        localStorage.setItem('currentStage', newStage);
+                    }
+                }
+            }  else {
+                progress.textContent = 'Progress: ' + completed + '/' + total + ' habits completed';
+                progressBar.classList.remove('complete');
+            }
+
+            });
         });
-    });
+    }
+
+    const calendar = document.getElementById('calendar');
+    if (calendar) {
+        const completedDays = JSON.parse(localStorage.getItem('completedDays')) || [];
+        
+        const now = new Date();
+        const year = now.getFullYear();
+        const month = now.getMonth();
+        
+        // Days of week headers
+        const headers = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+        headers.forEach(function(day) {
+            const header = document.createElement('div');
+            header.className = 'calendar-day-header';
+            header.textContent = day;
+            calendar.appendChild(header);
+        });
+        
+        // Calculate offset for Monday start
+        const firstDay = new Date(year, month, 1).getDay();
+        const offset = (firstDay + 6) % 7;
+        
+        // Empty cells before first day
+        for (let i = 0; i < offset; i++) {
+            const empty = document.createElement('div');
+            empty.className = 'calendar-day empty';
+            calendar.appendChild(empty);
+        }
+        
+        // Days of the month
+        const daysInMonth = new Date(year, month + 1, 0).getDate();
+        
+        for (let day = 1; day <= daysInMonth; day++) {
+            const cell = document.createElement('div');
+            cell.className = 'calendar-day';
+            cell.textContent = day;
+
+            const todayDate = now.getDate();
+            if (day === todayDate) {
+                cell.classList.add('today');
+            }
+
+            // Check if this day was completed
+            const dateString = year + '-' + 
+                String(month + 1).padStart(2, '0') + '-' + 
+                String(day).padStart(2, '0');
+            
+            if (completedDays.includes(dateString)) {
+                cell.classList.add('completed');
+            }
+            
+            calendar.appendChild(cell);
+        }
     }
 
     // Community logic
