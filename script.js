@@ -219,8 +219,7 @@ const routes = {
                     <p id="counterText">47 people have checked in today</p>
                     <textarea id="reflectionInput" 
                         placeholder="Share a short reflection to check in — what helped you wake for Fajr today?" 
-                        rows="3">
-                    </textarea>
+                        rows="3"></textarea>
                     <button id="checkInButton">I woke up for Fajr today</button>
                     <p id="checkInMessage"></p>
                 </div>
@@ -348,7 +347,6 @@ function runPageLogic() {
             progress.textContent = 'Progress: ' + completed + '/' + total + ' habits completed';
 
             if (completed === total) {
-                // Update stage banner
                 const stageBanner = document.getElementById('stageBanner');
                 const stageBannerText = document.getElementById('stageBannerText');
                 const savedDays = JSON.parse(localStorage.getItem('completedDays')) || [];
@@ -370,8 +368,6 @@ function runPageLogic() {
                 progress.textContent = 'Masha\'Allah — all habits complete. بارك الله فيك';
                 progressBar.classList.add('complete');
 
-
-                // Save today as a completed day
                 const completedDays = JSON.parse(localStorage.getItem('completedDays')) || [];
                 const today = new Date().toISOString().split('T')[0];
                 
@@ -380,7 +376,6 @@ function runPageLogic() {
                     localStorage.setItem('completedDays', JSON.stringify(completedDays));
                 }
 
-                // Check if stage should advance
                 if (completedDays.length >= 14) {
                     const newStage = userStage + 1;
                     if (newStage <= 4) {
@@ -404,7 +399,6 @@ function runPageLogic() {
         const year = now.getFullYear();
         const month = now.getMonth();
         
-        // Days of week headers
         const headers = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
         headers.forEach(function(day) {
             const header = document.createElement('div');
@@ -413,18 +407,15 @@ function runPageLogic() {
             calendar.appendChild(header);
         });
         
-        // Calculate offset for Monday start
         const firstDay = new Date(year, month, 1).getDay();
         const offset = (firstDay + 6) % 7;
         
-        // Empty cells before first day
         for (let i = 0; i < offset; i++) {
             const empty = document.createElement('div');
             empty.className = 'calendar-day empty';
             calendar.appendChild(empty);
         }
         
-        // Days of the month
         const daysInMonth = new Date(year, month + 1, 0).getDate();
         
         for (let day = 1; day <= daysInMonth; day++) {
@@ -437,7 +428,6 @@ function runPageLogic() {
                 cell.classList.add('today');
             }
 
-            // Check if this day was completed
             const dateString = year + '-' + 
                 String(month + 1).padStart(2, '0') + '-' + 
                 String(day).padStart(2, '0');
